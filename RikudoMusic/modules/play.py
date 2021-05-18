@@ -1,3 +1,5 @@
+
+
 import json
 import os
 from typing import Callable
@@ -29,6 +31,7 @@ from RikudoMusic.services.callsmusic import callsmusic, queues
 from RikudoMusic.services.callsmusic.callsmusic import client as USER
 from RikudoMusic.services.converter.converter import convert
 from RikudoMusic.services.downloaders import youtube
+
 
 chat_id = None
 arq = ARQ("https://thearq.tech", ARQ_API_KEY)
@@ -401,6 +404,7 @@ async def play(_, message: Message):
                     await lel.edit(
                         "<b>Remember to add helper to your channel</b>",
                     )
+                    pass
                 try:
                     invitelink = await _.export_chat_invite_link(chid)
                 except:
@@ -463,7 +467,7 @@ async def play(_, message: Message):
         )
         file_name = get_file_name(audio)
         title = file_name
-        thumb_name = "https://telegra.ph/file/094e3707ac666a6f8e03d.jpg"
+        thumb_name = "https://telegra.ph/file/f6086f8909fbfeb0844f2.png"
         thumbnail = thumb_name
         duration = round(audio.duration / 60)
         views = "Locally added"
@@ -496,7 +500,7 @@ async def play(_, message: Message):
 
         except Exception as e:
             await lel.edit(
-                "Song not found.Try another song or maybe you should work on your English."
+                "Song not found.Try another song or maybe spell it properly."
             )
             print(str(e))
             return
@@ -539,7 +543,11 @@ async def play(_, message: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        try:
+            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        except:
+            message.reply("Group Call is not connected or I can't join it")
+            return
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
@@ -573,6 +581,7 @@ async def deezer(client: Client, message_: Message):
                     await lel.edit(
                         "<b>Remember to add helper to your channel</b>",
                     )
+                    pass
                 try:
                     invitelink = await client.export_chat_invite_link(chid)
                 except:
@@ -596,7 +605,7 @@ async def deezer(client: Client, message_: Message):
                     # print(e)
                     await lel.edit(
                         f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add assistant to your Group and try again</b>",
+                        "\n\nOr manually add assistant @RikudoMusicPlayer to your Group and try again</b>",
                     )
     try:
         await USER.get_chat(chid)
@@ -656,7 +665,11 @@ async def deezer(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        try:
+            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        except:
+            res.edit("Group call is not connected of I can't join it")
+            return
 
     await res.delete()
 
@@ -691,6 +704,7 @@ async def jiosaavn(client: Client, message_: Message):
                     await lel.edit(
                         "<b>Remember to add helper to your channel</b>",
                     )
+                    pass
                 try:
                     invitelink = await client.export_chat_invite_link(chid)
                 except:
@@ -714,7 +728,7 @@ async def jiosaavn(client: Client, message_: Message):
                     # print(e)
                     await lel.edit(
                         f"<b>🔴 Flood Wait Error 🔴 \nUser {user.first_name} couldn't join your group due to heavy requests for userbot! Make sure user is not banned in group."
-                        "\n\nOr manually add @RikudoMusicPlayer to your Group and try again</b>",
+                        "\n\nOr manually add @RikudiMusicPlayer to your Group and try again</b>",
                     )
     try:
         await USER.get_chat(chid)
@@ -786,7 +800,11 @@ async def jiosaavn(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        try:
+            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        except:
+            res.edit("Group call is not connected of I can't join it")
+            return
     await res.edit("Generating Thumbnail.")
     await generate_cover(requested_by, sname, ssingers, sduration, sthumb)
     await res.delete()
@@ -797,5 +815,3 @@ async def jiosaavn(client: Client, message_: Message):
         caption=f"Playing {sname} Via Jiosaavn",
     )
     os.remove("final.png")
-
-
