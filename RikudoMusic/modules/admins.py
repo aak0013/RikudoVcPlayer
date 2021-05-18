@@ -1,13 +1,14 @@
-from asyncio.queues import QueueEmpty
 
+from asyncio.queues import QueueEmpty
+from DaisyXMusic.config import que
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from RikudoMusic.function.admins import set
-from RikudoMusic.helpers.channelmusic import get_chat_id
-from RikudoMusic.helpers.decorators import authorized_users_only, errors
-from RikudoMusic.helpers.filters import command, other_filters
-from RikudoMusic.services.callsmusic import callsmusic
+from DaisyXMusic.function.admins import set
+from DaisyXMusic.helpers.channelmusic import get_chat_id
+from DaisyXMusic.helpers.decorators import authorized_users_only, errors
+from DaisyXMusic.helpers.filters import command, other_filters
+from DaisyXMusic.services.callsmusic import callsmusic
 
 
 @Client.on_message(filters.command("adminreset"))
@@ -104,3 +105,4 @@ async def admincache(client, message: Message):
             for member in await message.chat.get_members(filter="administrators")
         ],
     )
+await message.reply_text("❇️ Admin cache refreshed!")
